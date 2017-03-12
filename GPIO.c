@@ -1,0 +1,36 @@
+#include "GPIO.h"
+
+void RCC_APB2_UART1_ON()
+{
+	RCC_APB2 |= RCC_APB2_UART1_ENABLE; 
+}
+void SetBaudRate()
+{
+	USART1_BRR |= (DIV_Mantiasa)| (DIV_Fraction );
+}
+void SetUart1()
+{
+	SetGPIO_A_AF();
+	USART1_C1 |= USART1_UE | USART1_TXEIE | USART1_TCIE | USART1_RXNEIE ;
+	SetBaudRate();
+	USART1_C1 |=  USART1_RE | USART1_TE;
+	
+}
+void SetGPIO_A_AF()
+{
+	RCC_AHB1ENR |= AHB1_ENABLE;
+	GPIO_A_MODER |= GPIO_A_10_INPUT_USART1 | GPIO_A_9_AF_USART1;
+	GPIO_A_AFRH |= GPIO_A10_AF7 | GPIO_A9_AF7;
+	GPIO_A_OTYPER |= GPIO_A9_PP_TYPE ;
+	GPIO_A_PUPDR |= GPIO_A9_PU ;
+	GPIO_A_SPEEDER |= GPIO_A10_SPEED_FAST | GPIO_A9_SPEED_FAST;
+
+	}
+void UART1_Write(char  message)
+{
+	
+	
+		USART2_DR = message;
+		
+	
+}
